@@ -1,0 +1,13 @@
+error_reporting — 设置应该报告何种 PHP 错误
+
+说明
+int error_reporting ([ int $level ] )
+error_reporting() 函数能够在运行时设置 error_reporting 指令。 PHP 有诸多错误级别，使用该函数可以设置在脚本运行时的级别。 如果没有设置可选参数 level， error_reporting() 仅会返回当前的错误报告级别。
+
+参数
+level
+新的 error_reporting 级别。 可以是一个位掩码也可以是一个已命名的常量。 强烈建议使用已命名的常量，以确保兼容将来的版本。 由于错误级别的添加、整数取值范围的增加， 较久的基于整数的错误级别不会总是和预期的表现一致。
+可用的错误级别常量及其实际含义描述在了 predefined constants 中。
+
+返回值
+返回旧的 error_reporting 级别，或者在 level 参数未给出时返回当前的级别。
