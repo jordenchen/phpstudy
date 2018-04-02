@@ -1,0 +1,1 @@
+二者的区别在于，getenv不支持IIS的isapi方式运行的PHP。
