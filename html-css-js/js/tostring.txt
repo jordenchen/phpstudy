@@ -1,0 +1,10 @@
+function herdoc(fn){
+    return fn.toString().split('\n').slice(1,-1).join();
+}
+
+smalltext = herdoc(function(){/*
+  换行
+  换行  
+*/})
+
+ javascript 是大小写敏感的编程语言
