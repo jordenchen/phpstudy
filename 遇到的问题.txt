@@ -1,0 +1,14 @@
+scandir() has been disabled
+
+lamp restart
+realpath
+parse_ini_file
+$_SERVER['SCRIPT_FILENAME']
+strtoupper
+is_array
+putenv
+spl_autoload_register
+单引号串和双引号串在PHP中的处理是不相同的。双引号串中的内容可以被解释而且替换，而单引号串中的内容总被认为是普通字符。
+https://sjolzy.cn/PHP-autoload-and-automatic-loading-mechanism-splautoload-Detailed.html
+set_include_path
+http://www.cnblogs.com/yue-blog/p/5901891.html

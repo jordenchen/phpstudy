@@ -1,0 +1,9 @@
+__FILE__  表示当前执行脚本的文件路径
+__DIR__  表示当前执行脚本的文件目录路径
+directory_separator
+DIRECTORY_SEPARATOR
+PHP_SAPI
+服务器的运行模式
+cli 命令行运行
+cgi-fcgi 
+PHP_OS 宿主的操作系统
