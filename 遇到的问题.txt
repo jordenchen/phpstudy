@@ -12,3 +12,15 @@ spl_autoload_register
 https://sjolzy.cn/PHP-autoload-and-automatic-loading-mechanism-splautoload-Detailed.html
 set_include_path
 http://www.cnblogs.com/yue-blog/p/5901891.html
+
+php调试
+var_dump()
+exit()
+
+ini_set('display_errors', 1)
+
+display_errors
+display_start_errors
+
+get_declared_classes
+array_pop

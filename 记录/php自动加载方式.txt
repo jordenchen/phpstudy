@@ -1,0 +1,17 @@
+php的自动加载类库是为了解决在创建新类的时候，文件的开头插入过多的require或者include语句。
+
+//auto1.php
+class auto1{
+    
+    ob = new auto2();
+
+}
+
+//auto2.php
+class auto2{
+    
+    public function __construct(){
+        echo "I'm ahto2";
+    }
+
+}
