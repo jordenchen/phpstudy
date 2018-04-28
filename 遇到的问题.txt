@@ -24,3 +24,22 @@ display_start_errors
 
 get_declared_classes
 array_pop
+
+__METHOD__
+__FUNCTION__
+
+constant() 
+
+
+二者都表明了本文件的绝对路径，区别在于，
+$_SERVER['SCRIPT_FILENAME']指向当前执行脚本的绝对路径；
+__FILE__指向当前文件的绝对路径；也就是写在哪个文件里就是哪里。
+
+PHP_EOL就是其中的一个，代表php的换行符，这个变量会根据平台而变，在windows下会是\r\n，在linux下是\n，在mac下是\r
+
+
+php安装一直有问题
+https://www.microsoft.com/zh-cn/download/confirmation.aspx?id=30679
+安装这个之后，就没出现msvcr110加载失败的问题了
+
+
