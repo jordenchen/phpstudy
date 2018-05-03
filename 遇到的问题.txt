@@ -43,3 +43,4 @@ https://www.microsoft.com/zh-cn/download/confirmation.aspx?id=30679
 安装这个之后，就没出现msvcr110加载失败的问题了
 
 
+php -r  "readfile('http://install.phpcomposer.com/installer');" | php echo @php "%~dp0composer.phar" %*>composer.bat
