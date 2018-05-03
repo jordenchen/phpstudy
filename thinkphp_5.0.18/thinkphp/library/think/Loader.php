@@ -69,12 +69,12 @@ class Loader
     public static function autoload($class)
     {
         // 检测命名空间别名
-        if (!empty(self::$namespaceAlias)) {
-            $namespace = dirname($class);
-            if (isset(self::$namespaceAlias[$namespace])) {
-                $original = self::$namespaceAlias[$namespace] . '\\' . basename($class);
-                if (class_exists($original)) {
-                    return class_alias($original, $class, false);
+        if (!empty(self::$namespaceAlias)) {   //empty 检查一个变量是否为空
+            $namespace = dirname($class); //dirname — 返回路径中的目录部分
+            if (isset(self::$namespaceAlias[$namespace])) { //isset — 检测变量是否已设置并且非 NULL
+                $original = self::$namespaceAlias[$namespace] . '\\' . basename($class);//basename — 返回路径中的文件名部分 string basename ( string $path [, string $suffix ] )
+                if (class_exists($original)) {  //class_exists — 检查类是否已定义bool class_exists ( string $class_name [, bool $autoload = true ] )
+                    return class_alias($original, $class, false); //class_alias — 为一个类创建别名bool class_alias ( string $original , string $alias [, bool $autoload = TRUE ] )
                 }
             }
         }
@@ -82,7 +82,8 @@ class Loader
         if ($file = self::findFile($class)) {
             // 非 Win 环境不严格区分大小写
             if (!IS_WIN || pathinfo($file, PATHINFO_FILENAME) == pathinfo(realpath($file), PATHINFO_FILENAME)) {
-                __include_file($file);
+                __include_file($file);//pathinfo — 返回文件路径的信息mixed pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] )
+                //realpath — 返回规范化的绝对路径名 string realpath ( string $path )
                 return true;
             }
         }
