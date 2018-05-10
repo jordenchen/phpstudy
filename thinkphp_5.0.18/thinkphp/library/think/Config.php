@@ -164,7 +164,7 @@ class Config
         if (!isset(self::$config[$range])) self::$config[$range] = [];
 
         // 字符串则表示单个配置设置
-        if (is_string($name)) {
+        if (is_string($name)) {  //is_string
             if (!strpos($name, '.')) {
                 self::$config[$range][strtolower($name)] = $value;
             } else {
@@ -177,17 +177,17 @@ class Config
         }
 
         // 数组则表示批量设置
-        if (is_array($name)) {
+        if (is_array($name)) { //is_array
             if (!empty($value)) {
                 self::$config[$range][$value] = isset(self::$config[$range][$value]) ?
-                    array_merge(self::$config[$range][$value], $name) :
+                    array_merge(self::$config[$range][$value], $name) :  //如果输入的数组中有相同的字符串键名，则该键名后面的值将覆盖前一个值。然而，如果数组包含数字键名，后面的值将不会覆盖原来的值，而是附加到后面。
                     $name;
 
                 return self::$config[$range][$value];
             }
 
             return self::$config[$range] = array_merge(
-                self::$config[$range], array_change_key_case($name)
+                self::$config[$range], array_change_key_case($name) //array_change_key_case — 将数组中的所有键名修改为全大写或小写
             );
         }
 
