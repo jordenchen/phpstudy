@@ -1,0 +1,18 @@
+1、chmod
+chmod [-cfvR]  [--help] mode file 
+[ugoa][+-=][rwxX] 
+chmod -R 777 file
+
+2、nginx
+if(!-e $request_filename){
+    rewrite ^/(.*)$ /index.php?s=$1
+}
+
+3、vsftpd
+yum install -y vsftpd
+service vsftpd start|restart
+开放root权限（不知道具体原因）
+/etc/local/vsftpd/userlist
+/etc/local/vsftpd/ftpuser
+
+
