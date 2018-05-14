@@ -130,23 +130,28 @@ class Request
     protected function __construct($options = [])
     {
         foreach ($options as $name => $item) {
-            if (property_exists($this, $name)) {
+            if (property_exists($this, $name)) {  //bool property_exists ( mixed $class , string $property )
                 $this->$name = $item;
             }
         }
-        if (is_null($this->filter)) {
-            $this->filter = Config::get('default_filter');
+        if (is_null($this->filter)) { //bool is_null ( mixed $var )
+            $this->filter = Config::get('default_filter');  //获取默认的过滤器
         }
 
         // 保存 php://input
         $this->input = file_get_contents('php://input');
     }
-
+/**
+ * 钩子方法TO-DO
+ * @param  [type] $method [description]
+ * @param  [type] $args   [description]
+ * @return [type]         [description]
+ */
     public function __call($method, $args)
     {
-        if (array_key_exists($method, self::$hook)) {
-            array_unshift($args, $this);
-            return call_user_func_array(self::$hook[$method], $args);
+        if (array_key_exists($method, self::$hook)) {  //bool array_key_exists ( mixed $key , array $array )
+            array_unshift($args, $this); //int array_unshift ( array &$array , mixed $value1 [, mixed $... ] ); array_push() 
+            return call_user_func_array(self::$hook[$method], $args);//mixed call_user_func_array ( callable $callback , array $param_arr )
         } else {
             throw new Exception('method not exists:' . __CLASS__ . '->' . $method);
         }
@@ -162,7 +167,7 @@ class Request
     public static function hook($method, $callback = null)
     {
         if (is_array($method)) {
-            self::$hook = array_merge(self::$hook, $method);
+            self::$hook = array_merge(self::$hook, $method); //array array_merge ( array $array1 [, array $... ] )
         } else {
             self::$hook[$method] = $callback;
         }
@@ -174,9 +179,9 @@ class Request
      * @param array $options 参数
      * @return \think\Request
      */
-    public static function instance($options = [])
+    public static function instance($options = []) 
     {
-        if (is_null(self::$instance)) {
+        if (is_null(self::$instance)) {  //bool is_null ( mixed $var ) null类型的三种情况
             self::$instance = new static($options);
         }
         return self::$instance;

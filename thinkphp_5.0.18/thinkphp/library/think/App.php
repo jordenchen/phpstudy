@@ -76,7 +76,7 @@ class App
      */
     public static function run(Request $request = null)
     {
-        $request = is_null($request) ? Request::instance() : $request;
+        $request = is_null($request) ? Request::instance() : $request;  //判断请求是否存在，不存在实例化请求信息
 
         try {
             $config = self::initCommon();
@@ -86,7 +86,7 @@ class App
                 BIND_MODULE && Route::bind(BIND_MODULE);
             } elseif ($config['auto_bind_module']) {
                 // 入口自动绑定
-                $name = pathinfo($request->baseFile(), PATHINFO_FILENAME);
+                $name = pathinfo($request->baseFile(), PATHINFO_FILENAME);//pathinfo(path,options)PATHINFO_DIRNAME、PATHINFO_BASENAME、PATHINFO_EXTENSION
                 if ($name && 'index' != $name && is_dir(APP_PATH . $name)) {
                     Route::bind($name);
                 }
@@ -176,20 +176,20 @@ class App
                 self::$namespace = APP_NAMESPACE;
             }
 
-            Loader::addNamespace(self::$namespace, APP_PATH);
+            Loader::addNamespace(self::$namespace, APP_PATH);  //自动类加载机制TO-DO
 
             // 初始化应用
-            $config       = self::init();
-            self::$suffix = $config['class_suffix'];
+            $config       = self::init();  //初始化各个系统环境变量
+            self::$suffix = $config['class_suffix'];  //应用类库后缀
 
             // 应用调试模式
             self::$debug = Env::get('app_debug', Config::get('app_debug'));
 
             if (!self::$debug) {
                 ini_set('display_errors', 'Off');
-            } elseif (!IS_CLI) {
+            } elseif (!IS_CLI) {     //不是命令行运行方式
                 // 重新申请一块比较大的 buffer
-                if (ob_get_level() > 0) {
+                if (ob_get_level() > 0) {  //TO-DO 不理解为什么要清空缓存区，再去开启
                     $output = ob_get_clean();
                 }
 
