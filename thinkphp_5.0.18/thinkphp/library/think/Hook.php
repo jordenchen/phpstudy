@@ -30,8 +30,8 @@ class Hook
     {
         isset(self::$tags[$tag]) || self::$tags[$tag] = [];
 
-        if (is_array($behavior) && !is_callable($behavior)) {
-            if (!array_key_exists('_overlay', $behavior) || !$behavior['_overlay']) {
+        if (is_array($behavior) && !is_callable($behavior)) {  //is_callable — 检测参数是否为合法的可调用结构bool is_callable ( callable $name [, bool $syntax_only = false [, string &$callable_name ]] )
+            if (!array_key_exists('_overlay', $behavior) || !$behavior['_overlay']) {  //bool array_key_exists ( mixed $key , array $array ) 不存在_overlay键，或者_overlay的值为false
                 unset($behavior['_overlay']);
                 self::$tags[$tag] = array_merge(self::$tags[$tag], $behavior);
             } else {
@@ -100,7 +100,7 @@ class Hook
             }
         }
 
-        return $once ? end($results) : $results;
+        return $once ? end($results) : $results;//mixed end ( array &$array )将数组的内部指针指向最后一个单元
     }
 
     /**
@@ -114,24 +114,24 @@ class Hook
      */
     public static function exec($class, $tag = '', &$params = null, $extra = null)
     {
-        App::$debug && Debug::remark('behavior_start', 'time');
+        App::$debug && Debug::remark('behavior_start', 'time');  //代码运行的开始时间
 
-        $method = Loader::parseName($tag, 1, false);
+        $method = Loader::parseName($tag, 1, false); //将C风格的转化为JAVA风格的命名方式
 
-        if ($class instanceof \Closure) {
-            $result = call_user_func_array($class, [ & $params, $extra]);
+        if ($class instanceof \Closure) {//instanceof 用于确定一个 PHP 变量是否属于某一类 class 的实例：
+            $result = call_user_func_array($class, [ & $params, $extra]);//mixed call_user_func_array ( callable $callback , array $param_arr )调用回调函数，并把一个数组参数作为回调函数的参数  
             $class  = 'Closure';
-        } elseif (is_array($class)) {
-            list($class, $method) = $class;
+        } elseif (is_array($class)) {  //如果是数组
+            list($class, $method) = $class; //在操作中给一组变量赋值
 
             $result = (new $class())->$method($params, $extra);
             $class  = $class . '->' . $method;
-        } elseif (is_object($class)) {
+        } elseif (is_object($class)) { //bool is_object ( mixed $var ) 检测变量是否是一个对象
             $result = $class->$method($params, $extra);
-            $class  = get_class($class);
-        } elseif (strpos($class, '::')) {
+            $class  = get_class($class);//string get_class ([ object $object = NULL ] )返回对象实例 object 所属类的名字。
+        } elseif (strpos($class, '::')) { //如果是包含::的string对象
             $result = call_user_func_array($class, [ & $params, $extra]);
-        } else {
+        } else {  //如果是类
             $obj    = new $class();
             $method = ($tag && is_callable([$obj, $method])) ? $method : 'run';
             $result = $obj->$method($params, $extra);

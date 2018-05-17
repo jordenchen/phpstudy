@@ -615,14 +615,14 @@ class Loader
     public static function parseName($name, $type = 0, $ucfirst = true)
     {
         if ($type) {
-            $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+            $name = preg_replace_callback('/_([a-zA-Z])/', function ($match) { //执行一个正则表达式搜索并且使用一个回调进行替换 mixed preg_replace_callback ( mixed $pattern , callable $callback , mixed $subject [, int $limit = -1 [, int &$count ]] )
                 return strtoupper($match[1]);
             }, $name);
 
-            return $ucfirst ? ucfirst($name) : lcfirst($name);
+            return $ucfirst ? ucfirst($name) : lcfirst($name); //string ucfirst ( string $str )将字符串的首字母转换为大写 lcfirst() - 使一个字符串的第一个字符小写   strtolower() - 将字符串转化为小写 strtoupper() - 将字符串转化为大写 ucwords() - 将字符串中每个单词的首字母转换为大写
         }
 
-        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));
+        return strtolower(trim(preg_replace("/[A-Z]/", "_\\0", $name), "_"));//mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit = -1 [, int &$count ]] )  string trim ( string $str [, string $character_mask = " \t\n\r\0\x0B" ] )
     }
 
     /**
