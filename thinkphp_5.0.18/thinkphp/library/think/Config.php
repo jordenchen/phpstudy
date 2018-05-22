@@ -49,7 +49,7 @@ class Config
     {
         $range = $range ?: self::$range;
 
-        if (empty($type)) $type = pathinfo($config, PATHINFO_EXTENSION);
+        if (empty($type)) $type = pathinfo($config, PATHINFO_EXTENSION); //mixed pathinfo ( string $path [, int $options = PATHINFO_DIRNAME | PATHINFO_BASENAME | PATHINFO_EXTENSION | PATHINFO_FILENAME ] )
 
         $class = false !== strpos($type, '\\') ?
             $type :
@@ -180,14 +180,14 @@ class Config
         if (is_array($name)) { //is_array
             if (!empty($value)) {
                 self::$config[$range][$value] = isset(self::$config[$range][$value]) ?
-                    array_merge(self::$config[$range][$value], $name) :  //如果输入的数组中有相同的字符串键名，则该键名后面的值将覆盖前一个值。然而，如果数组包含数字键名，后面的值将不会覆盖原来的值，而是附加到后面。
+                    array_merge(self::$config[$range][$value], $name) :  //如果输入的数组中有相同的字符串键名，则该键名后面的值将覆盖前一个值。然而，如果数组包含数字键名，后面的值将不会覆盖原来的值，而是附加到后面。array array_merge ( array $array1 [, array $... ] )将一个或多个数组的单元合并起来，一个数组中的值附加在前一个数组的后面。返回作为结果的数组。如果输入的数组中有相同的字符串键名，则该键名后面的值将覆盖前一个值。然而，如果数组包含数字键名，后面的值将不会覆盖原来的值，而是附加到后面。如果只给了一个数组并且该数组是数字索引的，则键名会以连续方式重新索引。
                     $name;
 
                 return self::$config[$range][$value];
             }
 
             return self::$config[$range] = array_merge(
-                self::$config[$range], array_change_key_case($name) //array_change_key_case — 将数组中的所有键名修改为全大写或小写
+                self::$config[$range], array_change_key_case($name) //array_change_key_case — 将数组中的所有键名修改为全大写或小写array array_change_key_case ( array $array [, int $case = CASE_LOWER ] )
             );
         }
 
