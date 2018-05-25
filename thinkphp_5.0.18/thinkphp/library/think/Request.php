@@ -388,6 +388,7 @@ class Request
      */
     public function pathinfo()
     {
+        //1、var_pathinfo是thinkphp的兼容模式
         if (is_null($this->pathinfo)) {
             if (isset($_GET[Config::get('var_pathinfo')])) {
                 // 判断URL里面是否有兼容模式参数
@@ -403,12 +404,12 @@ class Request
                 foreach (Config::get('pathinfo_fetch') as $type) {
                     if (!empty($_SERVER[$type])) {
                         $_SERVER['PATH_INFO'] = (0 === strpos($_SERVER[$type], $_SERVER['SCRIPT_NAME'])) ?
-                        substr($_SERVER[$type], strlen($_SERVER['SCRIPT_NAME'])) : $_SERVER[$type];
+                        substr($_SERVER[$type], strlen($_SERVER['SCRIPT_NAME'])) : $_SERVER[$type];//string substr ( string $string , int $start [, int $length ] )返回字符串的子串 int strlen ( string $string )获取字符串长度
                         break;
                     }
                 }
             }
-            $this->pathinfo = empty($_SERVER['PATH_INFO']) ? '/' : ltrim($_SERVER['PATH_INFO'], '/');
+            $this->pathinfo = empty($_SERVER['PATH_INFO']) ? '/' : ltrim($_SERVER['PATH_INFO'], '/');  //string ltrim ( string $str [, string $character_mask ] ) 删除字符串开头的空白字符（或其他字符）
         }
         return $this->pathinfo;
     }
@@ -428,7 +429,7 @@ class Request
                 $this->path = $pathinfo;
             } elseif ($suffix) {
                 // 去除正常的URL后缀
-                $this->path = preg_replace('/\.(' . ltrim($suffix, '.') . ')$/i', '', $pathinfo);
+                $this->path = preg_replace('/\.(' . ltrim($suffix, '.') . ')$/i', '', $pathinfo); //mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit = -1 [, int &$count ]] )执行一个正则表达式的搜索和替换
             } else {
                 // 允许任何后缀访问
                 $this->path = preg_replace('/\.' . $this->ext() . '$/i', '', $pathinfo);

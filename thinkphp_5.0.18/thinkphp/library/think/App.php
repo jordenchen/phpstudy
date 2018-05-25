@@ -83,7 +83,7 @@ class App
 
             // 模块/控制器绑定
             if (defined('BIND_MODULE')) {
-                BIND_MODULE && Route::bind(BIND_MODULE);
+                BIND_MODULE && Route::bind(BIND_MODULE); //BIND_MODULE绑定模块判断
             } elseif ($config['auto_bind_module']) {
                 // 入口自动绑定
                 $name = pathinfo($request->baseFile(), PATHINFO_FILENAME);//pathinfo(path,options)PATHINFO_DIRNAME、PATHINFO_BASENAME、PATHINFO_EXTENSION
@@ -617,7 +617,7 @@ class App
         $result = false;
 
         // 路由检测
-        $check = !is_null(self::$routeCheck) ? self::$routeCheck : $config['url_route_on'];
+        $check = !is_null(self::$routeCheck) ? self::$routeCheck : $config['url_route_on']; //url_route_on 是否开启路由
         if ($check) {
             // 开启路由
             if (is_file(RUNTIME_PATH . 'route.php')) {
@@ -625,7 +625,7 @@ class App
                 $rules = include RUNTIME_PATH . 'route.php';
                 is_array($rules) && Route::rules($rules);
             } else {
-                $files = $config['route_config_file'];
+                $files = $config['route_config_file']; //route_config_file路由文件配置
                 foreach ($files as $file) {
                     if (is_file(CONF_PATH . $file . CONF_EXT)) {
                         // 导入路由配置

@@ -202,13 +202,13 @@ class Route
     protected static function registerRules($rules, $type = '*')
     {
         foreach ($rules as $key => $val) {
-            if (is_numeric($key)) {
-                $key = array_shift($val);
+            if (is_numeric($key)) {  //bool is_numeric ( mixed $var )如果 var 是数字和数字字符串则返回 TRUE，否则返回 FALSE。
+                $key = array_shift($val); //mixed array_shift ( array &$array )  array_shift() 将 array 的第一个单元移出并作为结果返回，将 array 的长度减一并将所有其它单元向前移动一位。所有的数字键名将改为从零开始计数，文字键名将不变。
             }
             if (empty($val)) {
                 continue;
             }
-            if (is_string($key) && 0 === strpos($key, '[')) {
+            if (is_string($key) && 0 === strpos($key, '[')) { //路由分组
                 $key = substr($key, 1, -1);
                 self::group($key, $val);
             } elseif (is_array($val)) {
@@ -407,7 +407,7 @@ class Route
      */
     public static function group($name, $routes, $option = [], $pattern = [])
     {
-        if (is_array($name)) {
+        if (is_array($name)) {  //设置公共的路由参数
             $option = $name;
             $name   = isset($option['name']) ? $option['name'] : '';
         }

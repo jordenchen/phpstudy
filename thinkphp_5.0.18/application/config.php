@@ -76,7 +76,7 @@ return [
 
     // PATHINFO变量名 用于兼容模式
     'var_pathinfo'           => 's',
-    // 兼容PATH_INFO获取
+    // 兼容PATH_INFO获取  一定的环境下才会有下面的SERVER变量产生
     'pathinfo_fetch'         => ['ORIG_PATH_INFO', 'REDIRECT_PATH_INFO', 'REDIRECT_URL'],
     // pathinfo分隔符
     'pathinfo_depr'          => '/',
