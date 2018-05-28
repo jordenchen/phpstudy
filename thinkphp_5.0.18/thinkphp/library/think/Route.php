@@ -372,7 +372,7 @@ class Route
      * @param string    $type 分组信息名称 name option pattern
      * @return mixed
      */
-    public static function getGroup($type)
+    public static function getGroup($type) // 获取当前的分组信息，如果没存在初始化变量，例外如果type为name，返回nulll
     {
         if (isset(self::$group[$type])) {
             return self::$group[$type];
@@ -412,7 +412,7 @@ class Route
             $name   = isset($option['name']) ? $option['name'] : '';
         }
         // 分组
-        $currentGroup = self::getGroup('name');
+        $currentGroup = self::getGroup('name');  
         if ($currentGroup) {
             $name = $currentGroup . ($name ? '/' . ltrim($name, '/') : '');
         }
