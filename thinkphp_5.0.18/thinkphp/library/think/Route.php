@@ -305,7 +305,7 @@ class Route
         if ('/' != $rule || $group) {
             $rule = trim($rule, '/');
         }
-        $vars = self::parseVar($rule);
+        $vars = self::parseVar($rule);  //分析路由规则，提取变量信息
         if (isset($name)) {
             $key    = $group ? $group . ($rule ? '/' . $rule : '') : $rule;
             $suffix = isset($option['ext']) ? $option['ext'] : null;
@@ -421,9 +421,9 @@ class Route
                 $currentOption  = self::getGroup('option');
                 $currentPattern = self::getGroup('pattern');
                 self::setGroup($name, array_merge($currentOption, $option), array_merge($currentPattern, $pattern));
-                call_user_func_array($routes, []);
+                call_user_func_array($routes, []); //mixed call_user_func_array ( callable $callback , array $param_arr )调用回调函数，并把一个数组参数作为回调函数的参数。返回回调函数的结果。如果出错的话就返回FALSE
                 self::setGroup($currentGroup, $currentOption, $currentPattern);
-                if ($currentGroup != $name) {
+                if ($currentGroup != $name) {  //
                     self::$rules['*'][$name]['route']   = '';
                     self::$rules['*'][$name]['var']     = self::parseVar($name);
                     self::$rules['*'][$name]['option']  = $option;
@@ -1575,7 +1575,7 @@ class Route
         $var = [];
         foreach (explode('/', $rule) as $val) {
             $optional = false;
-            if (false !== strpos($val, '<') && preg_match_all('/<(\w+(\??))>/', $val, $matches)) {
+            if (false !== strpos($val, '<') && preg_match_all('/<(\w+(\??))>/', $val, $matches)) { //int preg_match_all ( string $pattern , string $subject [, array &$matches [, int $flags = PREG_PATTERN_ORDER [, int $offset = 0 ]]] ) 执行一个全局正则表达式匹配
                 foreach ($matches[1] as $name) {
                     if (strpos($name, '?')) {
                         $name     = substr($name, 0, -1);
