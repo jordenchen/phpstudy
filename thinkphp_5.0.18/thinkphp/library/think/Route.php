@@ -230,8 +230,10 @@ class Route
      * @return void
      */
     public static function rule($rule, $route = '', $type = '*', $option = [], $pattern = [])
+    //Route::rule(['new/:id'=>'News/read','blog/:name'=>'Blog/detail']);
+    //Route::rule('new/:id','News/update','POST');
     {
-        $group = self::getGroup('name');
+        $group = self::getGroup('name'); 
 
         if (!is_null($group)) {
             // 路由分组
@@ -302,16 +304,16 @@ class Route
             $rule = substr($rule, 0, -1);
         }
 
-        if ('/' != $rule || $group) {
+        if ('/' != $rule || $group) {   //如果不是根目录或者有分组，就去掉两端的/符合
             $rule = trim($rule, '/');
         }
-        $vars = self::parseVar($rule);  //分析路由规则，提取变量信息
+        $vars = self::parseVar($rule);  //分析路由规则，提取变量信息。提取变量是可选还是必选
         if (isset($name)) {
             $key    = $group ? $group . ($rule ? '/' . $rule : '') : $rule;
             $suffix = isset($option['ext']) ? $option['ext'] : null;
             self::name($name, [$key, $vars, self::$domain, $suffix]);
         }
-        if (isset($option['modular'])) {
+        if (isset($option['modular'])) {  //是否设置多模块
             $route = $option['modular'] . '/' . $route;
         }
         if ($group) {
@@ -324,7 +326,7 @@ class Route
                 self::$rules['*'][$group]['rule'][] = ['rule' => $rule, 'route' => $route, 'var' => $vars, 'option' => $option, 'pattern' => $pattern];
             }
         } else {
-            if ('*' != $type && isset(self::$rules['*'][$rule])) {
+            if ('*' != $type && isset(self::$rules['*'][$rule])) { //如果请求类型为所有，并且已经有路由规则已有设定的话，重置该路由规则
                 unset(self::$rules['*'][$rule]);
             }
             if (self::$domain) {
@@ -1569,7 +1571,7 @@ class Route
     }
 
     // 分析路由规则中的变量
-    private static function parseVar($rule)
+    private static function parseVar($rule) //参数的几个形式1、<id> <id问号> 2、[:id] 3、:id  4、id ；返回一个二维数组1代表为必选，2为可选 例如$var[:id] =1 
     {
         // 提取路由规则中的变量
         $var = [];
@@ -1595,7 +1597,7 @@ class Route
             if (0 === strpos($val, ':')) {
                 // URL变量
                 $name       = substr($val, 1);
-                $var[$name] = $optional ? 2 : 1;
+                $var[$name] = $optional ? 2 : 1; //$var[':id'] = 1 1代表为必选，2为可选
             }
         }
         return $var;

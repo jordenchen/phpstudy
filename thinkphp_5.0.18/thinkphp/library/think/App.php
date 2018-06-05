@@ -636,7 +636,7 @@ class App
             }
 
             // 路由检测（根据路由定义返回不同的URL调度）
-            $result = Route::check($request, $path, $depr, $config['url_domain_deploy']);
+            $result = Route::check($request, $path, $depr, $config['url_domain_deploy']); //url_domain_deploy域名部署
             $must   = !is_null(self::$routeMust) ? self::$routeMust : $config['url_route_must'];
 
             if ($must && false === $result) {
