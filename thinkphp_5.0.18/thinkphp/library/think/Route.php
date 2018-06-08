@@ -1000,7 +1000,7 @@ class Route
         } else {
             $rule = $item;
         }
-        $bind = implode('|', $array);
+        $bind = implode('|', $array); //string implode ( string $glue , array $pieces )将一个一维数组的值转化为字符串
         // 参数有效性检查
         if (isset($option) && !self::checkOption($option, $request)) {
             // 路由不匹配
