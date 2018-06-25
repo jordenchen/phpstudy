@@ -172,9 +172,9 @@ class Route
     public static function import(array $rule, $type = '*')
     {
         // 检查域名部署
-        if (isset($rule['__domain__'])) {
-            self::domain($rule['__domain__']);
-            unset($rule['__domain__']);
+        if (isset($rule['__domain__'])) {  //isset检测变量是否已设置并且非 NULL
+            self::domain($rule['__domain__']); 
+            unset($rule['__domain__']); //unset释放给定的变量
         }
 
         // 检查变量规则
@@ -209,7 +209,7 @@ class Route
                 continue;
             }
             if (is_string($key) && 0 === strpos($key, '[')) { //路由分组
-                $key = substr($key, 1, -1);
+                $key = substr($key, 1, -1); //substr
                 self::group($key, $val);
             } elseif (is_array($val)) {
                 self::setRule($key, $val[0], $type, $val[1], isset($val[2]) ? $val[2] : []);
@@ -279,6 +279,9 @@ class Route
      * @param array         $pattern 变量规则
      * @param string        $group 所属分组
      * @return void
+     *
+     *setRule('new/:id','News/read','post|get',['ext'=>'shtml'],['id'=>'\d{4}'],'new')
+     * setRule(['News/read','new/:id'],'','post|get',['ext'=>'shtml'],['id'=>'\d{4}'],'new')
      */
     protected static function setRule($rule, $route, $type = '*', $option = [], $pattern = [], $group = '')
     {
