@@ -281,7 +281,7 @@ class Route
      * @return void
      *
      *setRule('new/:id','News/read','post|get',['ext'=>'shtml'],['id'=>'\d{4}'],'new')
-     * setRule(['News/read','new/:id'],'','post|get',['ext'=>'shtml'],['id'=>'\d{4}'],'new')
+     * setRule(['news','new/:id'],'News/read','post|get',['ext'=>'shtml'],['id'=>'\d{4}'],'new')
      */
     protected static function setRule($rule, $route, $type = '*', $option = [], $pattern = [], $group = '')
     {
@@ -314,7 +314,7 @@ class Route
         if (isset($name)) {
             $key    = $group ? $group . ($rule ? '/' . $rule : '') : $rule;
             $suffix = isset($option['ext']) ? $option['ext'] : null;
-            self::name($name, [$key, $vars, self::$domain, $suffix]);
+            self::name($name, [$key, $vars, self::$domain, $suffix]); //记录$rules['name'][$name] $name路由名称标识 [完整的路由规则，变量标识，域名标识，后缀标识]
         }
         if (isset($option['modular'])) {  //是否设置多模块
             $route = $option['modular'] . '/' . $route;
@@ -329,7 +329,7 @@ class Route
                 self::$rules['*'][$group]['rule'][] = ['rule' => $rule, 'route' => $route, 'var' => $vars, 'option' => $option, 'pattern' => $pattern];
             }
         } else {
-            if ('*' != $type && isset(self::$rules['*'][$rule])) { //如果请求类型为所有，并且已经有路由规则已有设定的话，重置该路由规则
+            if ('*' != $type && isset(self::$rules['*'][$rule])) { //如果请求类型有设定，并且已经有路由规则已有设定的话，重置该路由规则
                 unset(self::$rules['*'][$rule]);
             }
             if (self::$domain) {
